@@ -1,3 +1,4 @@
+//A code to find 7 numbers out of 9 to make a sum of 100.
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -13,29 +14,21 @@ class Coding_Ninja
             ans+=hm.get(i);
         }
         int extra_number=ans-100,loc_var=0;
-        boolean b;
         int first_key=0,sec_key=0;
         for(int i=0;i<9;i++)
         {
             loc_var=extra_number-hm.get(i);
-            if(loc_var!=hm.get(i))
-            {
-                b=hm.containsValue(loc_var);
-                if(b==true)
+                if(hm.containsValue(loc_var) && loc_var!=hm.get(i))
                 {
-                    for(int k=0;k<9;k++)
-                    {
-                        if(hm.get(k)==loc_var)
-                        {
-                        sec_key=hm.get(k);
-                        first_key=hm.get(i);
-                        }
-                        
-                    }
+                    sec_key=loc_var;
+                    first_key=hm.get(i);
                     break;
                 }
-            }
-            
+                if(i==8)
+                {
+                    System.out.println("NO ans found");
+                    System.exit(0);
+                }
         }
         for(int i=0;i<9;i++)
         {
