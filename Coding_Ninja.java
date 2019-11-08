@@ -23,16 +23,14 @@ class Coding_Ninja
                 b=hm.containsValue(loc_var);
                 if(b==true)
                 {
-                    for(int k=0;k<9;k++)
-                    {
-                        if(hm.get(k)==loc_var)
-                        {
-                        sec_key=hm.get(k);
-                        first_key=hm.get(i);
-                        }
-                        
-                    }
+                    first_key=loc_var;
+                    sec_key=hm.get(i);
                     break;
+                }
+                if(i==9)
+                {
+                    System.out.println("No answere possible");
+                    System.exit(0);
                 }
             }
             
