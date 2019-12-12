@@ -1,7 +1,4 @@
 //A code which takes 2 numbers in input, the first one will be the our main number and the second input will be length of the output.
-//The output will be the multiply of first number and its length will be given by user.
-//The condition is the output should not contain more than 4 distinct numbers.
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
 
