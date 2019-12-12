@@ -28,7 +28,7 @@ class CodeChef
                 }
             }
             Integer maxValueInMap=(Collections.max(hm.get(i).values())); 
-            for(Map.Entry entry: hm.get(i).entrySet()){
+            for(Map.Entry<Character,Integer> entry: hm.get(i).entrySet()){
                 if(maxValueInMap.equals(entry.getValue()))
                 {
                     System.out.println(entry.getKey());
