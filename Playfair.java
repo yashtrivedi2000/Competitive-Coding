@@ -1,6 +1,4 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Playfair {
@@ -8,41 +6,68 @@ public class Playfair {
         Scanner sc = new Scanner(System.in);
         String plain_text = sc.nextLine();
         String key = sc.nextLine();
-        char ch1, ch2;
-        System.out.println(generateMatrix(key)); 
-        String encrypted_text;
-        // for (int i = 0; i < plain_text.length(); i++) {
-        //         ch1=plain_text.charAt(i);
-        //         ch2=plain_text.charAt(i++);
-        //         if(ch1==ch2){
-        //             ch2='X';
-        //             i--;
-        //         }
-        //}
-
+        
+        ArrayList<Character> encrypted_text=generateMatrix(key);
+        System.out.println(encryptText(encrypted_text,plain_text));
         sc.close();
 
     }
+    public static String encryptText(ArrayList<Character>  matrix, String plainText){
+        String encryptedString="";
+        char ch1, ch2;
+        int horizontal_pos1,horizontal_pos2,final_pos1,final_pos2,vertical_pos1,vertical_pos2;
+        for (int i = 0; i < plainText.length(); i++) {
+            ch1=plainText.charAt(i);
+            ch2=plainText.charAt(++i);
+            if(ch2==ch1){
+                --i;
+                ch2='X';
+            }
+            horizontal_pos2 = matrix.indexOf(ch2)%5;
+            horizontal_pos1 = matrix.indexOf(ch1)%5;
+            vertical_pos2 = (Math.abs(matrix.indexOf(ch2)/5))*5;
+            vertical_pos1 = (Math.abs( matrix.indexOf(ch1)/5))*5;
+            if(horizontal_pos2==horizontal_pos1){
+                final_pos1=(horizontal_pos1+5)%25;
+                final_pos2=(horizontal_pos2+5)%25;
+                encryptedString+=matrix.get(final_pos1);
+                encryptedString+=matrix.get(final_pos2);
+            }
+            else if(vertical_pos1==vertical_pos2){
+                horizontal_pos1++;
+                horizontal_pos2++;
+                
+                if(horizontal_pos1>4)
+                    horizontal_pos1-=5;
+                if(horizontal_pos2>4)
+                    horizontal_pos2-=5;
+                encryptedString+=matrix.get(horizontal_pos1+vertical_pos1);
+                encryptedString+=matrix.get(horizontal_pos2+vertical_pos2);
+            }
+            else{
+                final_pos1=(horizontal_pos2)+vertical_pos1;
+                final_pos2=(horizontal_pos1)+vertical_pos2;
+                encryptedString+=matrix.get(final_pos1);
+                encryptedString+=matrix.get(final_pos2);
+            }
+        }
+        return encryptedString;
 
-    public static ArrayList<ArrayList<Character> > generateMatrix(String key) {
-         ArrayList<ArrayList<Character> > matrix 
-            = new ArrayList<ArrayList<Character>>();
-        
+    }
+    public static ArrayList<Character>  generateMatrix(String key) {
+         ArrayList<Character>  matrix 
+            = new ArrayList<Character>();
         char ch;
-        matrix.add(new ArrayList<Character>());
-        matrix.add(new ArrayList<Character>());
-        matrix.add(new ArrayList<Character>());
-        matrix.add(new ArrayList<Character>());
-        matrix.add(new ArrayList<Character>());
         for (int i = 0; i < key.length(); i++) {
             ch = key.charAt(i);
-            if (!(matrix.get(0).contains(ch) || ch == 'J'|| matrix.get(1).contains(ch)))
-                matrix.get(Math.abs(i/6)).add(ch);
+            if (!(matrix.contains(ch) || ch == 'J'))
+                matrix.add(ch);
         }
         for (char i = 'A'; i < '['; i++) {
-            if (!(matrix.get(0).contains(i) || i == 'J' || matrix.get(1).contains(i)))
-            matrix.get(Math.abs(matrix.size()/6)).add(i);
+            if (!(matrix.contains(i) || i == 'J'))
+                matrix.add(i);
         }
+        System.out.println(matrix);
         return matrix;
     }
 }
